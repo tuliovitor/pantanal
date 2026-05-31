@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <script>
+    /* =====================================================
+       RESET DE SCROLL IMEDIATO (Evita restauração automática)
+       ===================================================== */
+    if (window.history && window.history.scrollRestoration) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Uma experiência cinematográfica e imersiva sobre o Pantanal Brasileiro — o maior bioma alagável do planeta, sua fauna, flora, e os desafios ambientais do nosso tempo." />
+  <meta name="theme-color" content="#0d1f0f" />
+  <title>Pantanal — Experiência Cinematográfica</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet principal -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="intro-active">
+
+  <!-- =============================================
+       LOADING SCREEN — Aparece antes de tudo
+  ============================================= -->
+  <div id="loading-screen" aria-label="Carregando experiência" role="status">
+    <div class="loading-inner">
+      <div class="loading-logo">
+        <span class="loading-logo-text">Pantanal</span>
+        <span class="loading-logo-sub">Brasil · Bioma Vivo</span>
+      </div>
+      <div class="loading-bar-wrapper">
+        <div class="loading-bar-track">
+          <div class="loading-bar-fill" id="loading-bar-fill"></div>
+        </div>
+        <span class="loading-percent" id="loading-percent">0%</span>
+      </div>
+      <p class="loading-message" id="loading-message">Carregando experiência...</p>
+    </div>
+  </div>
+
+  <!-- =============================================
+       SEÇÃO 1 — TELA DE BOAS-VINDAS (TYPEWRITER)
+  ============================================= -->
+  <section id="intro-section" aria-label="Introdução ao Pantanal">
+
+
+
+    <!-- Conteúdo typewriter centralizado -->
+    <div class="intro-content">
+      <div class="typewriter-wrapper" id="typewriter-wrapper">
+        <span class="typewriter-text" id="typewriter-text"></span>
+        <span class="typewriter-cursor" id="typewriter-cursor" aria-hidden="true">|</span>
+      </div>
+    </div>
+
+    <!-- Indicador de scroll -->
+    <div class="scroll-hint" id="scroll-hint" aria-label="Role para começar">
+      <span class="scroll-hint-text">Role para começar</span>
+      <span class="scroll-hint-arrow" aria-hidden="true">↓</span>
+    </div>
+
+  </section>
+
+  <!-- =============================================
+       MÁSCARA CIRCULAR DE TRANSIÇÃO
+  ============================================= -->
+  <div id="circle-mask" aria-hidden="true">
+    <canvas id="circle-mask-canvas"></canvas>
+  </div>
+
+  <!-- =============================================
+       OVERLAY CINEMATOGRÁFICO — Transição de entrada
+       Aparece sobre a intro, some conforme o canvas revela
+  ============================================= -->
+  <div id="cinematic-overlay" aria-hidden="true"></div>
+
+  <!-- =============================================
+       WRAPPER DO CANVAS (EXPERIÊNCIA CINEMATOGRÁFICA)
+  ============================================= -->
+  <div id="canvas-wrapper" aria-label="Experiência cinematográfica do Pantanal">
+
+    <!-- Canvas principal — renderiza todos os frames -->
+    <canvas id="pantanal-canvas" aria-hidden="true"></canvas>
+
+    <!-- ==========================================
+         OVERLAYS DE TÓPICOS — BLOCO 1 AMANHECER
+    =========================================== -->
+    <div class="topic-overlay" id="topic-dawn" aria-live="polite">
+      <div class="topic-left">
+        <span class="topic-label">Caracterização Geral do Bioma</span>
+        <span class="topic-presenter">Apresentação: Coelho</span>
+      </div>
+      <div class="topic-right">
+        <p class="topic-text" id="topic-dawn-text"></p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         OVERLAYS DE TÓPICOS — BLOCO 2 MANHÃ
+    =========================================== -->
+    <div class="topic-overlay" id="topic-morning" aria-live="polite">
+      <div class="topic-left">
+        <span class="topic-label">Flora & Fauna</span>
+        <span class="topic-presenter">Apresentação: Weverton & Octávio</span>
+      </div>
+      <div class="topic-right">
+        <p class="topic-text" id="topic-morning-text"></p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         OVERLAYS DE TÓPICOS — BLOCO 3 TARDE
+    =========================================== -->
+    <div class="topic-overlay" id="topic-afternoon" aria-live="polite">
+      <div class="topic-left">
+        <span class="topic-label">Dinâmica Ecológica</span>
+        <span class="topic-presenter">Apresentação: Murillo</span>
+      </div>
+      <div class="topic-right">
+        <p class="topic-text" id="topic-afternoon-text"></p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         OVERLAYS DE TÓPICOS — BLOCO 4 PÔR DO SOL
+    =========================================== -->
+    <div class="topic-overlay" id="topic-sunset" aria-live="polite">
+      <div class="topic-left">
+        <span class="topic-label">Impactos & Conservação</span>
+        <span class="topic-presenter">Apresentação: Túlio & Murillo</span>
+      </div>
+      <div class="topic-right">
+        <p class="topic-text" id="topic-sunset-text"></p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         OVERLAYS DE TÓPICOS — BLOCO 5 NOITE
+    =========================================== -->
+    <div class="topic-overlay" id="topic-night" aria-live="polite">
+      <div class="topic-left">
+        <span class="topic-label">Dados & Conclusão</span>
+        <span class="topic-presenter">Apresentação: Codho & Murillo</span>
+      </div>
+      <div class="topic-right">
+        <p class="topic-text" id="topic-night-text"></p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         INDICADOR DE BLOCO NARRATIVO (HUD topo)
+    =========================================== -->
+    <div id="block-indicator" aria-label="Momento do dia" aria-live="polite">
+      <span id="block-indicator-icon" aria-hidden="true">🌅</span>
+      <span id="block-indicator-text">Amanhecer</span>
+    </div>
+
+    <!-- Indicador de scroll no canvas -->
+    <div id="canvas-scroll-hint" aria-label="Continue rolando">
+      <span>Continue explorando</span>
+      <span aria-hidden="true">↓</span>
+    </div>
+
+  </div>
+
+  <!-- =============================================
+       SEÇÕES PINNED DO GSAP (altura para scrub)
+  ============================================= -->
+  <!-- Cada bloco de 3 vídeos = 600vh -->
+  <div id="scroll-container" aria-hidden="true">
+
+    <!-- BLOCO 1 — AMANHECER (frames 0001–0280 aprox.) -->
+    <!-- Seções controlam APENAS textos e overlays, NUNCA frames -->
+    <section class="scroll-block" id="scene-dawn" data-block="dawn"
+             style="height: 600vh;">
+    </section>
+
+    <!-- BLOCO 2 — MANHÃ -->
+    <section class="scroll-block" id="scene-morning" data-block="morning"
+             style="height: 600vh;">
+    </section>
+
+    <!-- BLOCO 3 — TARDE -->
+    <section class="scroll-block" id="scene-afternoon" data-block="afternoon"
+             style="height: 600vh;">
+    </section>
+
+    <!-- BLOCO 4 — PÔR DO SOL -->
+    <section class="scroll-block" id="scene-sunset" data-block="sunset"
+             style="height: 600vh;">
+    </section>
+
+    <!-- BLOCO 5 — NOITE / VIA LÁCTEA (frames 0460–0579) -->
+    <section class="scroll-block" id="scene-night" data-block="night"
+             style="height: 600vh;">
+    </section>
+
+  </div>
+
+  <!-- =============================================
+       SEÇÃO DO QUIZ INTERATIVO
+  ============================================= -->
+  <div id="quiz-section" aria-label="Quiz sobre o Pantanal" role="main">
+
+    <!-- Overlay do canvas desfocado (persistente) -->
+    <div id="quiz-canvas-overlay" aria-hidden="true"></div>
+
+    <!-- CARD DE BOAS-VINDAS AO QUIZ -->
+    <div id="quiz-welcome" class="quiz-card" aria-label="Bem-vindo ao quiz">
+      <div class="quiz-welcome-inner">
+        <div class="quiz-welcome-icon" aria-hidden="true">
+          <div class="pantanal-emblem"></div>
+        </div>
+        <h2 class="quiz-welcome-title" id="quiz-welcome-title"></h2>
+        <p class="quiz-welcome-subtitle">10 perguntas sobre o Pantanal</p>
+        <p class="quiz-welcome-desc">Teste seus conhecimentos sobre o maior bioma alagável do planeta.</p>
+        <button class="quiz-btn-start" id="quiz-btn-start" aria-label="Iniciar quiz">
+          Iniciar Quiz <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SLIDER DE PERGUNTAS -->
+    <div id="quiz-slider" aria-label="Perguntas do quiz" role="region">
+
+      <!-- Barra de progresso global -->
+      <div class="quiz-progress-bar" id="quiz-progress-bar" aria-label="Progresso do quiz">
+        <div class="quiz-progress-fill" id="quiz-progress-fill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10"></div>
+        <div class="quiz-progress-segments" id="quiz-progress-segments" aria-hidden="true"></div>
+      </div>
+
+      <!-- CANTO SUPERIOR DIREITO RESERVADO PARA ANIME -->
+      <!-- /* ANIME-PLACEHOLDER — Adicione aqui a imagem do apresentador */ -->
+      <div id="quiz-anime-placeholder" aria-hidden="true" style="
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 200px;
+        height: 200px;
+        z-index: 100;
+        /* ANIME-PLACEHOLDER: insira <img src='assets/anime-01.webp'> aqui futuramente */
+      "></div>
+
+      <!-- Container dos slides -->
+      <div class="quiz-slides-container" id="quiz-slides-container">
+        <!-- Slides gerados via JS (quiz.js) -->
+      </div>
+
+    </div>
+
+    <!-- PLACAR FINAL (Stadium Overlay) -->
+    <div id="quiz-result" class="quiz-result-screen" aria-label="Resultado do quiz" aria-live="assertive">
+      
+      <!-- CAMADA 0: Imagem Base e Gradientes -->
+      <img src="assets/feedback-final.webp" alt="Feedback final" class="quiz-result-bg" />
+      <div class="quiz-result-gradient-top"></div>
+      <div class="quiz-result-gradient-bottom"></div>
+
+      <!-- CAMADA 4: ANIME-PLACEHOLDER (canto superior direito, sobre gradiente topo) -->
+      <div id="result-anime-placeholder" aria-hidden="true" style="
+        position: absolute;
+        top: 20px;
+        right: 4rem;
+        width: 200px;
+        height: 200px;
+        z-index: 100;
+      ">
+        <!-- ANIME-PLACEHOLDER: reservado 200×200px -->
+      </div>
+
+      <!-- CAMADA 1: Placar superior (no gradiente do topo) -->
+      <div class="quiz-result-top-score">
+        <span class="quiz-result-leaf-icon" aria-hidden="true">🌿</span>
+        <h2 class="quiz-result-score-title"><span id="quiz-result-correct">0</span> de 10 acertos</h2>
+        <p class="quiz-result-subtext" id="quiz-result-message"></p>
+      </div>
+
+      <!-- CAMADA 2: Barra de progresso de acertos (no gradiente da base) -->
+      <div class="quiz-result-progress-container">
+        <div class="quiz-result-progress-header">
+          <span class="quiz-result-progress-label">Seu desempenho</span>
+          <span class="quiz-result-progress-text"><span id="quiz-result-progress-score">0</span> / 10</span>
+        </div>
+        <div class="quiz-result-progress-bar-wrapper">
+          <div class="quiz-result-progress-bar-fill" id="quiz-result-progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- CAMADA 3: Botão "Recomeçar" (canto inferior direito, sobre gradiente base) -->
+      <button class="quiz-btn-restart-stadium" id="quiz-btn-restart" aria-label="Recomeçar experiência">
+        ↩ Recomeçar experiência
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- =============================================
+       BIBLIOTECAS EXTERNAS (CDN)
+  ============================================= -->
+  <!-- GSAP Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- GSAP ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis — Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <!-- SplitType -->
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/package/index.umd.min.js"></script>
+
+  <!-- =============================================
+       SCRIPTS DO PROJETO (ordem de carregamento)
+  ============================================= -->
+  <script src="typewriter.js"></script>
+  <script src="preloader.js"></script>
+  <script src="canvas-engine.js"></script>
+  <script src="quiz.js"></script>
+  <script src="scripts.js"></script>
+
+</body>
+</html>
